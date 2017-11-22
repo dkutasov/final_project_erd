@@ -17,7 +17,7 @@
       <% @activities.each do |activity| %>
       <tr>
         <td><%= activity.trip.length %></td>
-        <td><%= activity.category_id %></td>
+        <td><%= activity.category.user_id %></td>
         <td>
           <a href="/activities/<%= activity.id %>" class="btn btn-primary">Show</a>
           <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">Edit</a>
