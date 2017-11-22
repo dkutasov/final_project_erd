@@ -54,9 +54,61 @@
       </script>
 
         <div class="form-group">
-      <%= f.label :users_email_cont, "User email contains" %>
-      <%= f.text_field :users_email_cont, :class => "form-control", :placeholder => "User email contains" %>
+      <%= f.label :user_email_cont, "User email contains" %>
+      <%= f.text_field :user_email_cont, :class => "form-control", :placeholder => "User email contains" %>
     </div>
+
+<div class="form-group">
+  <%= f.label :user_id, "Category User" %>
+  <div class="row">
+    <div class='col-md-6 mb-1'>
+      <%= f.text_field :category_user_id_gteq, :class => "form-control", :placeholder => "Category User greater than or equal to" %>
+    </div>
+    <div class='col-md-6'>
+      <%= f.text_field :category_user_id_lteq, :class => "form-control", :placeholder => "Category User less than or equal to" %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+          <%= f.label :created_at, "Activity Created at" %>
+          <div class="row">
+            <div class='col-md-6 mb-1'>
+              <div class='input-group date' id='activitygteqcreated_atPicker'>
+                  <%= f.text_field :activity_created_at_gteq, :class => "form-control", :placeholder => "Activity Created at greater than or equal to" %>
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+
+            <div class='col-md-6'>
+              <div class='input-group date' id='activitylteqcreated_atPicker'>
+                  <%= f.text_field :activity_created_at_lteq, :class => "form-control", :placeholder => "Activity Created at less than or equal to" %>
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <script type="text/javascript">
+          $(function () {
+              $('#activitygteqcreated_atPicker').datetimepicker({
+                  format: 'YYYY-MM-DD hh:mm:SS'
+              });
+              $('#activitylteqcreated_atPicker').datetimepicker({
+                  useCurrent: false,
+                  format: 'YYYY-MM-DD hh:mm:SS'
+              });
+              $('#activitygteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#activitylteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
+              });
+              $('#activitylteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#activitygteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
+              });
+          });
+      </script>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
@@ -73,12 +125,36 @@
     <table class="table table-striped table-hover">
       <tr>
         <th>Length</th>
+        <th>Category</th>
+        <th>User</th>
+        <th>Activity</th>
         <th>Actions</th>
       </tr>
 
       <% @trips.each do |trip| %>
       <tr>
         <td><%= trip.length %></td>
+        <td>
+          <% if trip.category.present? %>
+            <a href="/categories/<%= trip.category.id %>">
+              <%= trip.category.user_id %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if trip.user.present? %>
+            <a href="/users/<%= trip.user.id %>">
+              <%= trip.user.email %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if trip.activity.present? %>
+            <a href="/activities/<%= trip.activity.id %>">
+              <%= trip.activity.created_at %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/trips/<%= trip.id %>" class="btn btn-primary">Show</a>
           <a href="/trips/<%= trip.id %>/edit" class="btn btn-warning">Edit</a>

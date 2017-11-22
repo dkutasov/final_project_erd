@@ -1,15 +1,18 @@
 class User < ApplicationRecord
   # Direct associations
 
-  has_many   :preferences,
-             :class_name => "Category",
+  has_many   :trips,
              :dependent => :destroy
 
   # Indirect associations
 
-  has_many   :trips,
-             :through => :preferences,
-             :source => :trip
+  has_many   :categories,
+             :through => :trips,
+             :source => :category
+
+  has_many   :activities,
+             :through => :trips,
+             :source => :activity
 
   # Validations
 

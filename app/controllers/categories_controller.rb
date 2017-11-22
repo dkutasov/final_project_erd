@@ -1,23 +1,13 @@
 class CategoriesController < ApplicationController
-  before_action :current_user_must_be_category_user, :only => [:edit, :update, :destroy]
-
-  def current_user_must_be_category_user
-    category = Category.find(params[:id])
-
-    unless current_user == category.user
-      redirect_to :back, :alert => "You are not authorized for that."
-    end
-  end
-
   def index
     @q = Category.ransack(params[:q])
-    @categories = @q.result(:distinct => true).includes(:user, :trip, :activities, :trips).page(params[:page]).per(10)
+    @categories = @q.result(:distinct => true).includes(:trips, :users).page(params[:page]).per(10)
 
     render("categories/index.html.erb")
   end
 
   def show
-    @activity = Activity.new
+    @trip = Trip.new
     @category = Category.find(params[:id])
 
     render("categories/show.html.erb")
@@ -33,7 +23,6 @@ class CategoriesController < ApplicationController
     @category = Category.new
 
     @category.user_id = params[:user_id]
-    @category.trip_id = params[:trip_id]
 
     save_status = @category.save
 
@@ -59,7 +48,8 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-    @category.trip_id = params[:trip_id]
+
+    @category.user_id = params[:user_id]
 
     save_status = @category.save
 
