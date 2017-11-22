@@ -1,6 +1,8 @@
 class Category < ApplicationRecord
   # Direct associations
 
+  belongs_to :trip
+
   belongs_to :user
 
   # Indirect associations
