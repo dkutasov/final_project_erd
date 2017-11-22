@@ -1,14 +1,12 @@
 class TripsController < ApplicationController
   def index
     @q = Trip.ransack(params[:q])
-    @trips = @q.result(:distinct => true).includes(:preferences, :activities, :users, :categories).page(params[:page]).per(10)
+    @trips = @q.result(:distinct => true).includes(:user, :category, :activity).page(params[:page]).per(10)
 
     render("trips/index.html.erb")
   end
 
   def show
-    @activity = Activity.new
-    @category = Category.new
     @trip = Trip.find(params[:id])
 
     render("trips/show.html.erb")
@@ -24,6 +22,9 @@ class TripsController < ApplicationController
     @trip = Trip.new
 
     @trip.length = params[:length]
+    @trip.category_id = params[:category_id]
+    @trip.user_id = params[:user_id]
+    @trip.activity_id = params[:activity_id]
 
     save_status = @trip.save
 
@@ -51,6 +52,9 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
 
     @trip.length = params[:length]
+    @trip.category_id = params[:category_id]
+    @trip.user_id = params[:user_id]
+    @trip.activity_id = params[:activity_id]
 
     save_status = @trip.save
 

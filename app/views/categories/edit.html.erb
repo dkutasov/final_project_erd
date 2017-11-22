@@ -18,16 +18,13 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      
-      
-
-      <!-- Label and input for trip_id -->
+      <!-- Label and input for user_id -->
       <div class="form-group">
-        <label for="trip_id" class="control-label">
-          Trip
+        <label for="user_id" class="control-label">
+          User
         </label>
 
-        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :length, @category.trip_id), :class => "form-control") %>
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @category.user_id %>">
       </div>
 
       <button class="btn btn-warning">

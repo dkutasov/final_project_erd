@@ -27,6 +27,33 @@
         <input type="text" id="length" name="length" placeholder="Length" class="form-control" value="<%= @trip.length %>">
       </div>
 
+      <!-- Label and input for category_id -->
+      <div class="form-group">
+        <label for="category_id" class="control-label">
+          Category
+        </label>
+
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id, @trip.category_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email, @trip.user_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for activity_id -->
+      <div class="form-group">
+        <label for="activity_id" class="control-label">
+          Activity
+        </label>
+
+        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :created_at, @trip.activity_id), :class => "form-control") %>
+      </div>
+
       <button class="btn btn-success">
         Create Trip
       </button>

@@ -9,6 +9,18 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
+  <%= f.label :user_id, "User" %>
+  <div class="row">
+    <div class='col-md-6 mb-1'>
+      <%= f.text_field :user_id_gteq, :class => "form-control", :placeholder => "User greater than or equal to" %>
+    </div>
+    <div class='col-md-6'>
+      <%= f.text_field :user_id_lteq, :class => "form-control", :placeholder => "User less than or equal to" %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -49,18 +61,13 @@
       </script>
 
         <div class="form-group">
-      <%= f.label :user_email_cont, "User email contains" %>
-      <%= f.text_field :user_email_cont, :class => "form-control", :placeholder => "User email contains" %>
-    </div>
-
-<div class="form-group">
-      <%= f.label :trip_length_cont, "Trip length contains" %>
-      <%= f.text_field :trip_length_cont, :class => "form-control", :placeholder => "Trip length contains" %>
-    </div>
-
-<div class="form-group">
       <%= f.label :trips_length_cont, "Trip length contains" %>
       <%= f.text_field :trips_length_cont, :class => "form-control", :placeholder => "Trip length contains" %>
+    </div>
+
+<div class="form-group">
+      <%= f.label :users_email_cont, "User email contains" %>
+      <%= f.text_field :users_email_cont, :class => "form-control", :placeholder => "User email contains" %>
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
@@ -78,33 +85,16 @@
     <table class="table table-striped table-hover">
       <tr>
         <th>User</th>
-        <th>Trip</th>
         <th>Actions</th>
       </tr>
 
       <% @categories.each do |category| %>
       <tr>
-        <td>
-          <% if category.user.present? %>
-            <a href="/users/<%= category.user.id %>">
-              <%= category.user.email %>
-            </a>
-          <% end %>
-        </td>
-        <td>
-          <% if category.trip.present? %>
-            <a href="/trips/<%= category.trip.id %>">
-              <%= category.trip.length %>
-            </a>
-          <% end %>
-        </td>
+        <td><%= category.user_id %></td>
         <td>
           <a href="/categories/<%= category.id %>" class="btn btn-primary">Show</a>
-          
-          <% if current_user == category.user %>
-            <a href="/categories/<%= category.id %>/edit" class="btn btn-warning">Edit</a>
-            <a href="/delete_category/<%= category.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-          <% end %>
+          <a href="/categories/<%= category.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_category/<%= category.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
         </td>
       </tr>
       <% end %>

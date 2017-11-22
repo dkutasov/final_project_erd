@@ -9,6 +9,30 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
+  <%= f.label :trip_id, "Trip" %>
+  <div class="row">
+    <div class='col-md-6 mb-1'>
+      <%= f.text_field :trip_id_gteq, :class => "form-control", :placeholder => "Trip greater than or equal to" %>
+    </div>
+    <div class='col-md-6'>
+      <%= f.text_field :trip_id_lteq, :class => "form-control", :placeholder => "Trip less than or equal to" %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :category_id, "Category" %>
+  <div class="row">
+    <div class='col-md-6 mb-1'>
+      <%= f.text_field :category_id_gteq, :class => "form-control", :placeholder => "Category greater than or equal to" %>
+    </div>
+    <div class='col-md-6'>
+      <%= f.text_field :category_id_lteq, :class => "form-control", :placeholder => "Category less than or equal to" %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -49,8 +73,13 @@
       </script>
 
         <div class="form-group">
-      <%= f.label :trip_length_cont, "Trip length contains" %>
-      <%= f.text_field :trip_length_cont, :class => "form-control", :placeholder => "Trip length contains" %>
+      <%= f.label :trips_length_cont, "Trip length contains" %>
+      <%= f.text_field :trips_length_cont, :class => "form-control", :placeholder => "Trip length contains" %>
+    </div>
+
+<div class="form-group">
+      <%= f.label :users_email_cont, "User email contains" %>
+      <%= f.text_field :users_email_cont, :class => "form-control", :placeholder => "User email contains" %>
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
@@ -67,27 +96,15 @@
   <div class="col-md-12">
     <table class="table table-striped table-hover">
       <tr>
-        <th>Trip</th>
         <th>Category</th>
+        <th>Trip</th>
         <th>Actions</th>
       </tr>
 
       <% @activities.each do |activity| %>
       <tr>
-        <td>
-          <% if activity.trip.present? %>
-            <a href="/trips/<%= activity.trip.id %>">
-              <%= activity.trip.length %>
-            </a>
-          <% end %>
-        </td>
-        <td>
-          <% if activity.category.present? %>
-            <a href="/categories/<%= activity.category.id %>">
-              <%= activity.category.user_id %>
-            </a>
-          <% end %>
-        </td>
+        <td><%= activity.category_id %></td>
+        <td><%= activity.trip_id %></td>
         <td>
           <a href="/activities/<%= activity.id %>" class="btn btn-primary">Show</a>
           <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">Edit</a>
