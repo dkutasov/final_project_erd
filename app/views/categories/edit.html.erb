@@ -33,7 +33,7 @@
           Trip
         </label>
 
-        <input type="text" id="trip_id" name="trip_id" placeholder="Trip" class="form-control" value="<%= @category.trip_id %>">
+        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :length, @category.trip_id), :class => "form-control") %>
       </div>
 
       <button class="btn btn-warning">
