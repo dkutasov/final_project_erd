@@ -10,6 +10,10 @@ class Trip < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :users,
+             :through => :preferences,
+             :source => :user
+
   # Validations
 
 end

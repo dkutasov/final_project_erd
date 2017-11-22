@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :trips,
+             :through => :preferences,
+             :source => :trip
+
   # Validations
 
   # Include default devise modules. Others available are:
