@@ -16,7 +16,7 @@
 
       <% @categories.each do |category| %>
       <tr>
-        <td><%= category.user_id %></td>
+        <td><%= category.user.email %></td>
         <td><%= category.trip_id %></td>
         <td>
           <a href="/categories/<%= category.id %>" class="btn btn-primary">Show</a>
