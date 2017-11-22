@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
   end
 
   def index
-    @categories = Category.all
+    @categories = Category.page(params[:page]).per(10)
 
     render("categories/index.html.erb")
   end

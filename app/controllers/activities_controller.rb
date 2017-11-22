@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   def index
-    @activities = Activity.all
+    @activities = Activity.page(params[:page]).per(10)
 
     render("activities/index.html.erb")
   end

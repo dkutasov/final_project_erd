@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   def index
-    @trips = Trip.all
+    @trips = Trip.page(params[:page]).per(10)
 
     render("trips/index.html.erb")
   end
