@@ -6,22 +6,7 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>User</dt>
-      <dd>
-        <% if @category.user.present? %>
-          <a href="/users/<%= @category.user_id %>">
-            <%= @category.user.email %>
-          </a>
-        <% end %>
-      </dd>
-
-      <dt>Trip</dt>
-      <dd>
-        <% if @category.trip.present? %>
-          <a href="/trips/<%= @category.trip_id %>">
-            <%= @category.trip.length %>
-          </a>
-        <% end %>
-      </dd>
+      <dd><%= @category.user_id %></dd>
 
     </dl>
 
@@ -29,69 +14,13 @@
       <a href="/categories" class="btn btn-primary">
         Back
       </a>
-      <% if current_user == @category.user %>
-        <a href="/categories/<%= @category.id %>/edit" class="btn btn-warning">
-          Edit
-        </a>
-        <a href="/delete_category/<%= @category.id %>" class="btn btn-danger" rel="nofollow">
-          Delete
-        </a>
-      <% end %>
+      <a href="/categories/<%= @category.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_category/<%= @category.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
     </div>
-  </div>
-</div>
-
-<!-- A Category has many activities -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Activities
-      </li>
-
-      <% @category.activities.each do |activity| %>
-        <li class="list-group-item">
-          <a href="/activities/<%= activity.id %>">
-            <%= activity.trip_id %>
-          </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
-
-      <li class="list-group-item">
-        <form action="/create_activity" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for trip_id -->
-      <div class="form-group">
-        <label for="trip_id" class="control-label">
-          Trip
-        </label>
-
-        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :length), :class => "form-control") %>
-      </div>
-
-      <!-- Label and input for category_id -->
-      <input type="hidden" name="category_id" value="<%= @category.id %>">
-
-      <button class="btn btn-block btn-success">
-        Create Activity
-      </button>
-    </form>
-      </li>
-    </ul>
   </div>
 </div>
 
@@ -117,6 +46,78 @@
               <i class="fa fa-edit"></i>
             </a>
             <a href="/delete_trip/<%= trip.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_trip" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for length -->
+      <div class="form-group">
+        <label for="length" class="control-label">
+          Length
+        </label>
+
+        <input type="text" id="length" name="length" placeholder="Length" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for category_id -->
+      <input type="hidden" name="category_id" value="<%= @category.id %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for activity_id -->
+      <div class="form-group">
+        <label for="activity_id" class="control-label">
+          Activity
+        </label>
+
+        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :created_at), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Trip
+      </button>
+    </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- A Category has many users -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Users
+      </li>
+
+      <% @category.users.each do |user| %>
+        <li class="list-group-item">
+          <a href="/users/<%= user.id %>">
+            <%= user.email %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/users/<%= user.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/users/<%= user.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_user/<%= user.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
           </div>
