@@ -10,6 +10,10 @@ class Category < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :trips,
+             :through => :activities,
+             :source => :trip
+
   # Validations
 
 end
