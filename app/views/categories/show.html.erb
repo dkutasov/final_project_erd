@@ -26,3 +26,65 @@
     </div>
   </div>
 </div>
+
+<!-- A Category has many activities -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Activities
+      </li>
+
+      <% @category.activities.each do |activity| %>
+        <li class="list-group-item">
+          <a href="/activities/<%= activity.id %>">
+            <%= activity.trip_id %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<!-- A Category has many trips -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Trips
+      </li>
+
+      <% @category.trips.each do |trip| %>
+        <li class="list-group-item">
+          <a href="/trips/<%= trip.id %>">
+            <%= trip.length %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/trips/<%= trip.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/trips/<%= trip.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_trip/<%= trip.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
