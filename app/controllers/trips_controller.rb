@@ -1,6 +1,7 @@
 class TripsController < ApplicationController
   def index
-    @trips = Trip.page(params[:page]).per(10)
+    @q = Trip.ransack(params[:q])
+    @trips = @q.result(:distinct => true).includes(:preferences, :activities, :users, :categories).page(params[:page]).per(10)
 
     render("trips/index.html.erb")
   end
