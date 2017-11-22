@@ -16,8 +16,20 @@
 
       <% @activities.each do |activity| %>
       <tr>
-        <td><%= activity.trip.length %></td>
-        <td><%= activity.category.user_id %></td>
+        <td>
+          <% if activity.trip.present? %>
+            <a href="/trips/<%= activity.trip.id %>">
+              <%= activity.trip.length %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if activity.category.present? %>
+            <a href="/categories/<%= activity.category.id %>">
+              <%= activity.category.user_id %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/activities/<%= activity.id %>" class="btn btn-primary">Show</a>
           <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">Edit</a>

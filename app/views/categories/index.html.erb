@@ -16,8 +16,20 @@
 
       <% @categories.each do |category| %>
       <tr>
-        <td><%= category.user.email %></td>
-        <td><%= category.trip.length %></td>
+        <td>
+          <% if category.user.present? %>
+            <a href="/users/<%= category.user.id %>">
+              <%= category.user.email %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if category.trip.present? %>
+            <a href="/trips/<%= category.trip.id %>">
+              <%= category.trip.length %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/categories/<%= category.id %>" class="btn btn-primary">Show</a>
           

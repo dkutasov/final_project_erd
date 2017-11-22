@@ -6,10 +6,22 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>Trip</dt>
-      <dd><%= @activity.trip_id %></dd>
+      <dd>
+        <% if @activity.trip.present? %>
+          <a href="/trips/<%= @activity.trip_id %>">
+            <%= @activity.trip.length %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Category</dt>
-      <dd><%= @activity.category_id %></dd>
+      <dd>
+        <% if @activity.category.present? %>
+          <a href="/categories/<%= @activity.category_id %>">
+            <%= @activity.category.user_id %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 
