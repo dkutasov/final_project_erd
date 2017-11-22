@@ -47,8 +47,6 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-
-    @category.user_id = params[:user_id]
     @category.trip_id = params[:trip_id]
 
     save_status = @category.save
