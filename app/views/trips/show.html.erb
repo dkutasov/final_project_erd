@@ -51,6 +51,23 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_category" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+      <!-- Label and input for trip_id -->
+      <input type="hidden" name="trip_id" value="<%= @trip.id %>">
+
+      <button class="btn btn-block btn-success">
+        Create Category
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>
@@ -82,6 +99,29 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_activity" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for trip_id -->
+      <input type="hidden" name="trip_id" value="<%= @trip.id %>">
+
+      <!-- Label and input for category_id -->
+      <div class="form-group">
+        <label for="category_id" class="control-label">
+          Category
+        </label>
+
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Activity
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>

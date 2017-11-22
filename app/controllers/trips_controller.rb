@@ -6,6 +6,8 @@ class TripsController < ApplicationController
   end
 
   def show
+    @activity = Activity.new
+    @category = Category.new
     @trip = Trip.find(params[:id])
 
     render("trips/show.html.erb")

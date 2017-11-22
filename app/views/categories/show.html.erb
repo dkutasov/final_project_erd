@@ -56,6 +56,29 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_activity" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for trip_id -->
+      <div class="form-group">
+        <label for="trip_id" class="control-label">
+          Trip
+        </label>
+
+        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :length), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for category_id -->
+      <input type="hidden" name="category_id" value="<%= @category.id %>">
+
+      <button class="btn btn-block btn-success">
+        Create Activity
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>
