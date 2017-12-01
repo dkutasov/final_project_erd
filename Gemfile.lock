@@ -264,11 +264,8 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
- 6th-draft
     underscore-rails (1.8.3)
-=======
     uri-ssh_git (2.0.0)
-  master
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.1)

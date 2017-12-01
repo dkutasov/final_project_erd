@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201203606) do
+ActiveRecord::Schema.define(version: 20171201214814) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -30,8 +30,13 @@ ActiveRecord::Schema.define(version: 20171201203606) do
     t.integer  "category_id"
     t.integer  "trip_id"
     t.string   "name"
+    t.string   "location"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "location_latitude"
+    t.float    "location_longitude"
+    t.string   "location_formatted_address"
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -56,15 +61,18 @@ ActiveRecord::Schema.define(version: 20171201203606) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "activities_count"
   end
 
   create_table "trips", force: :cascade do |t|
-    t.string   "length"
     t.integer  "category_id"
-    t.integer  "user_id"
     t.integer  "activity_id"
+    t.date     "beginning_date"
+    t.date     "ending_date"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "activities_count"
   end
 
   create_table "users", force: :cascade do |t|
