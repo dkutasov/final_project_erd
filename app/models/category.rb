@@ -1,13 +1,13 @@
 class Category < ApplicationRecord
   # Direct associations
 
-  has_many   :trips,
-             :dependent => :destroy
+  has_many   :activities,
+             :dependent => :nullify
 
   # Indirect associations
 
   has_many   :users,
-             :through => :trips,
+             :through => :activities,
              :source => :user
 
   # Validations

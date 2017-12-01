@@ -27,28 +27,28 @@
   </div>
 </div>
 
-<!-- A Category has many trips -->
+<!-- A Category has many activities -->
 
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Trips
+        Activities
       </li>
 
-      <% @category.trips.each do |trip| %>
+      <% @category.activities.each do |activity| %>
         <li class="list-group-item">
-          <a href="/trips/<%= trip.id %>">
-            <%= trip.length %>
+          <a href="/activities/<%= activity.id %>">
+            <%= activity.created_at %>
           </a>
           <div class="btn-group btn-group-xs pull-right">
-            <a href="/trips/<%= trip.id %>" class="btn btn-primary">
+            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
-            <a href="/trips/<%= trip.id %>/edit" class="btn btn-warning">
+            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
-            <a href="/delete_trip/<%= trip.id %>" class="btn btn-danger" rel="nofollow">
+            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
           </div>
@@ -56,42 +56,45 @@
       <% end %>
 
       <li class="list-group-item">
-        <form action="/create_trip" method="post">
+        <form action="/create_activity" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for length -->
-      <div class="form-group">
-        <label for="length" class="control-label">
-          Length
-        </label>
-
-        <input type="text" id="length" name="length" placeholder="Length" class="form-control" value="">
-      </div>
 
       <!-- Label and input for category_id -->
       <input type="hidden" name="category_id" value="<%= @category.id %>">
 
+      <!-- Label and input for trip_id -->
+      <div class="form-group">
+        <label for="trip_id" class="control-label">
+          Trip
+        </label>
+
+        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :created_at), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for location -->
+      <div class="form-group">
+        <label for="location" class="control-label">
+          Location
+        </label>
+
+        <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="">
+      </div>
+
       <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email), :class => "form-control") %>
-      </div>
-
-      <!-- Label and input for activity_id -->
-      <div class="form-group">
-        <label for="activity_id" class="control-label">
-          Activity
-        </label>
-
-        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :created_at), :class => "form-control") %>
-      </div>
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <button class="btn btn-block btn-success">
-        Create Trip
+        Create Activity
       </button>
     </form>
       </li>

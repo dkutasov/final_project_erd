@@ -66,9 +66,44 @@
       </script>
 
         <div class="form-group">
-      <%= f.label :trips_length_cont, "Trip length contains" %>
-      <%= f.text_field :trips_length_cont, :class => "form-control", :placeholder => "Trip length contains" %>
-    </div>
+          <%= f.label :created_at, "Activity Created at" %>
+          <div class="row">
+            <div class='col-md-6 mb-1'>
+              <div class='input-group date' id='activitiesgteqcreated_atPicker'>
+                  <%= f.text_field :activities_created_at_gteq, :class => "form-control", :placeholder => "Activity Created at greater than or equal to" %>
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+
+            <div class='col-md-6'>
+              <div class='input-group date' id='activitieslteqcreated_atPicker'>
+                  <%= f.text_field :activities_created_at_lteq, :class => "form-control", :placeholder => "Activity Created at less than or equal to" %>
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <script type="text/javascript">
+          $(function () {
+              $('#activitiesgteqcreated_atPicker').datetimepicker({
+                  format: 'YYYY-MM-DD hh:mm:SS'
+              });
+              $('#activitieslteqcreated_atPicker').datetimepicker({
+                  useCurrent: false,
+                  format: 'YYYY-MM-DD hh:mm:SS'
+              });
+              $('#activitiesgteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#activitieslteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
+              });
+              $('#activitieslteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#activitiesgteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
+              });
+          });
+      </script>
 
 <div class="form-group">
       <%= f.label :users_email_cont, "User email contains" %>
