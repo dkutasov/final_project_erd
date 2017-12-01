@@ -1,13 +1,14 @@
 class Trip < ApplicationRecord
   # Direct associations
 
-  belongs_to :activity
-
-  belongs_to :category
-
-  belongs_to :user
+  has_many   :activities,
+             :dependent => :destroy
 
   # Indirect associations
+
+  has_many   :users,
+             :through => :activities,
+             :source => :user
 
   # Validations
 

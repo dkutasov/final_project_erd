@@ -5,35 +5,20 @@
 <div class="row">
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
-      <dt>Length</dt>
-      <dd><%= @trip.length %></dd>
-
       <dt>Category</dt>
-      <dd>
-        <% if @trip.category.present? %>
-          <a href="/categories/<%= @trip.category_id %>">
-            <%= @trip.category.user_id %>
-          </a>
-        <% end %>
-      </dd>
-
-      <dt>User</dt>
-      <dd>
-        <% if @trip.user.present? %>
-          <a href="/users/<%= @trip.user_id %>">
-            <%= @trip.user.email %>
-          </a>
-        <% end %>
-      </dd>
+      <dd><%= @trip.category_id %></dd>
 
       <dt>Activity</dt>
-      <dd>
-        <% if @trip.activity.present? %>
-          <a href="/activities/<%= @trip.activity_id %>">
-            <%= @trip.activity.created_at %>
-          </a>
-        <% end %>
-      </dd>
+      <dd><%= @trip.activity_id %></dd>
+
+      <dt>Beginning date</dt>
+      <dd><%= @trip.beginning_date %></dd>
+
+      <dt>Ending date</dt>
+      <dd><%= @trip.ending_date %></dd>
+
+      <dt>User</dt>
+      <dd><%= @trip.user_id %></dd>
 
     </dl>
 
@@ -48,5 +33,111 @@
         Delete
       </a>
     </div>
+  </div>
+</div>
+
+<!-- A Trip has many activities -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Activities
+      </li>
+
+      <% @trip.activities.each do |activity| %>
+        <li class="list-group-item">
+          <a href="/activities/<%= activity.id %>">
+            <%= activity.created_at %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_activity" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for category_id -->
+      <div class="form-group">
+        <label for="category_id" class="control-label">
+          Category
+        </label>
+
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for trip_id -->
+      <input type="hidden" name="trip_id" value="<%= @trip.id %>">
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for location -->
+      <div class="form-group">
+        <label for="location" class="control-label">
+          Location
+        </label>
+
+        <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+      <button class="btn btn-block btn-success">
+        Create Activity
+      </button>
+    </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- A Trip has many users -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Users
+      </li>
+
+      <% @trip.users.each do |user| %>
+        <li class="list-group-item">
+          <a href="/users/<%= user.id %>">
+            <%= user.email %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/users/<%= user.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/users/<%= user.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_user/<%= user.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
