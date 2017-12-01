@@ -18,31 +18,13 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for length -->
-      <div class="form-group">
-        <label for="length" class="control-label">
-          Length
-        </label>
-
-        <input type="text" id="length" name="length" placeholder="Length" class="form-control" value="<%= @trip.length %>">
-      </div>
-
       <!-- Label and input for category_id -->
       <div class="form-group">
         <label for="category_id" class="control-label">
           Category
         </label>
 
-        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id, @trip.category_id), :class => "form-control") %>
-      </div>
-
-      <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email, @trip.user_id), :class => "form-control") %>
+        <input type="text" id="category_id" name="category_id" placeholder="Category" class="form-control" value="<%= @trip.category_id %>">
       </div>
 
       <!-- Label and input for activity_id -->
@@ -51,7 +33,34 @@
           Activity
         </label>
 
-        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :created_at, @trip.activity_id), :class => "form-control") %>
+        <input type="text" id="activity_id" name="activity_id" placeholder="Activity" class="form-control" value="<%= @trip.activity_id %>">
+      </div>
+
+      <!-- Label and input for beginning_date -->
+      <div class="form-group">
+        <label for="beginning_date" class="control-label">
+          Beginning date
+        </label>
+
+        <input type="text" id="beginning_date" name="beginning_date" placeholder="Beginning date" class="form-control" value="<%= @trip.beginning_date %>">
+      </div>
+
+      <!-- Label and input for ending_date -->
+      <div class="form-group">
+        <label for="ending_date" class="control-label">
+          Ending date
+        </label>
+
+        <input type="text" id="ending_date" name="ending_date" placeholder="Ending date" class="form-control" value="<%= @trip.ending_date %>">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @trip.user_id %>">
       </div>
 
       <button class="btn btn-warning">

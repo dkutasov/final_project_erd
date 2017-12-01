@@ -24,7 +24,7 @@
           Category
         </label>
 
-        <input type="text" id="category_id" name="category_id" placeholder="Category" class="form-control" value="<%= @activity.category_id %>">
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id, @activity.category_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for trip_id -->
@@ -33,7 +33,7 @@
           Trip
         </label>
 
-        <input type="text" id="trip_id" name="trip_id" placeholder="Trip" class="form-control" value="<%= @activity.trip_id %>">
+        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :created_at, @activity.trip_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for name -->
@@ -44,6 +44,18 @@
 
         <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @activity.name %>">
       </div>
+
+      <!-- Label and input for location -->
+      <div class="form-group">
+        <label for="location" class="control-label">
+          Location
+        </label>
+
+        <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="<%= @activity.location %>">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <button class="btn btn-success">
         Create Activity
