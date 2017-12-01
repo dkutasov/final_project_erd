@@ -23,6 +23,7 @@ class CategoriesController < ApplicationController
     @category = Category.new
 
     @category.user_id = params[:user_id]
+    @category.name = params[:name]
 
     save_status = @category.save
 
@@ -50,6 +51,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
 
     @category.user_id = params[:user_id]
+    @category.name = params[:name]
 
     save_status = @category.save
 

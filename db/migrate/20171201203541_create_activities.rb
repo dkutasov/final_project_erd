@@ -3,6 +3,7 @@ class CreateActivities < ActiveRecord::Migration
     create_table :activities do |t|
       t.integer :category_id
       t.integer :trip_id
+      t.string :name
 
       t.timestamps
 

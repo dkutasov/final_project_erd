@@ -24,6 +24,7 @@ class ActivitiesController < ApplicationController
 
     @activity.category_id = params[:category_id]
     @activity.trip_id = params[:trip_id]
+    @activity.name = params[:name]
 
     save_status = @activity.save
 
@@ -52,6 +53,7 @@ class ActivitiesController < ApplicationController
 
     @activity.category_id = params[:category_id]
     @activity.trip_id = params[:trip_id]
+    @activity.name = params[:name]
 
     save_status = @activity.save
 

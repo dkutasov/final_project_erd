@@ -36,6 +36,15 @@
         <input type="text" id="trip_id" name="trip_id" placeholder="Trip" class="form-control" value="<%= @activity.trip_id %>">
       </div>
 
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @activity.name %>">
+      </div>
+
       <button class="btn btn-success">
         Create Activity
       </button>
