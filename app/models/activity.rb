@@ -1,11 +1,14 @@
 class Activity < ApplicationRecord
   # Direct associations
 
-  belongs_to :category
-
-  belongs_to :trip
+  has_many   :trips,
+             :dependent => :destroy
 
   # Indirect associations
+
+  has_many   :users,
+             :through => :trips,
+             :source => :user
 
   # Validations
 

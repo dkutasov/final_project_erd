@@ -1,6 +1,6 @@
 ActiveAdmin.register Trip do
 
- permit_params :length
+ permit_params :length, :category_id, :user_id, :activity_id
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
