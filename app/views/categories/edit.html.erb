@@ -27,6 +27,15 @@
         <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @category.user_id %>">
       </div>
 
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @category.name %>">
+      </div>
+
       <button class="btn btn-warning">
         Update Category
       </button>
