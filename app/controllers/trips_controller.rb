@@ -1,13 +1,23 @@
 class TripsController < ApplicationController
+  before_action :current_user_must_be_trip_user, :only => [:show, :edit, :update, :destroy]
+
+  def current_user_must_be_trip_user
+    trip = Trip.find(params[:id])
+
+    unless current_user == trip.user
+      redirect_to :back, :alert => "You are not authorized for that."
+    end
+  end
+
   def index
-    @q = Trip.ransack(params[:q])
-    @trips = @q.result(:distinct => true).includes(:activities, :users).page(params[:page]).per(10)
+    @q = current_user.trips.ransack(params[:q])
+      @trips = @q.result(:distinct => true).includes(:user, :itinerary_items, :activities).page(params[:page]).per(10)
 
     render("trips/index.html.erb")
   end
 
   def show
-    @activity = Activity.new
+    @itinerary_item = ItineraryItem.new
     @trip = Trip.find(params[:id])
 
     render("trips/show.html.erb")
@@ -27,6 +37,7 @@ class TripsController < ApplicationController
     @trip.beginning_date = params[:beginning_date]
     @trip.ending_date = params[:ending_date]
     @trip.user_id = params[:user_id]
+    @trip.name = params[:name]
 
     save_status = @trip.save
 
@@ -58,6 +69,7 @@ class TripsController < ApplicationController
     @trip.beginning_date = params[:beginning_date]
     @trip.ending_date = params[:ending_date]
     @trip.user_id = params[:user_id]
+    @trip.name = params[:name]
 
     save_status = @trip.save
 

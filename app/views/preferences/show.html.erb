@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h3>Preference #<%= @preference.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Category</dt>
+      <dd>
+        <% if @preference.category.present? %>
+          <a href="/categories/<%= @preference.category_id %>">
+            <%= @preference.category.name %>
+          </a>
+        <% end %>
+      </dd>
+
+      <dt>User</dt>
+      <dd>
+        <% if @preference.user.present? %>
+          <a href="/users/<%= @preference.user_id %>">
+            <%= @preference.user.email %>
+          </a>
+        <% end %>
+      </dd>
+
+      <dt>Name</dt>
+      <dd><%= @preference.name %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/preferences" class="btn btn-primary">
+        Back
+      </a>
+      <% if current_user == @preference.user %>
+        <a href="/preferences/<%= @preference.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_preference/<%= @preference.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

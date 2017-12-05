@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h1>
+    Itinerary items
+    <a href="/itinerary_items/new" class="btn btn-lg btn-success">New Itinerary item</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Activity</th>
+        <th>Trip</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @itinerary_items.each do |itinerary_item| %>
+      <tr>
+        <td>
+          <% if itinerary_item.activity.present? %>
+            <a href="/activities/<%= itinerary_item.activity.id %>">
+              <%= itinerary_item.activity.name %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if itinerary_item.trip.present? %>
+            <a href="/trips/<%= itinerary_item.trip.id %>">
+              <%= itinerary_item.trip.name %>
+            </a>
+          <% end %>
+        </td>
+        <td><%= itinerary_item.name %></td>
+        <td><%= itinerary_item.location %></td>
+        <td>
+          <a href="/itinerary_items/<%= itinerary_item.id %>" class="btn btn-primary">Show</a>
+          <a href="/itinerary_items/<%= itinerary_item.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_itinerary_item/<%= itinerary_item.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+    <%= paginate @itinerary_items, theme: 'twitter-bootstrap-4' %>
+  </div>
+</div>
+
+<script src="//maps.google.com/maps/api/js?v=3.24&key=AIzaSyCOTPWiuvyyo6sKoIBzKA4-1ol-vTOIOlM"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'location_map'}}, function(){
+    markers = handler.addMarkers(<%= raw @location_hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>

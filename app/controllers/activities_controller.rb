@@ -1,27 +1,13 @@
 class ActivitiesController < ApplicationController
-  before_action :current_user_must_be_activity_user, :only => [:edit, :update, :destroy]
-
-  def current_user_must_be_activity_user
-    activity = Activity.find(params[:id])
-
-    unless current_user == activity.user
-      redirect_to :back, :alert => "You are not authorized for that."
-    end
-  end
-
   def index
     @q = Activity.ransack(params[:q])
-    @activities = @q.result(:distinct => true).includes(:user, :trip, :category).page(params[:page]).per(10)
-    @location_hash = Gmaps4rails.build_markers(@activities.where.not(:location_latitude => nil)) do |activity, marker|
-      marker.lat activity.location_latitude
-      marker.lng activity.location_longitude
-      marker.infowindow "<h5><a href='/activities/#{activity.id}'>#{activity.created_at}</a></h5><small>#{activity.location_formatted_address}</small>"
-    end
+    @activities = @q.result(:distinct => true).includes(:category, :itinerary_items, :trips).page(params[:page]).per(10)
 
     render("activities/index.html.erb")
   end
 
   def show
+    @itinerary_item = ItineraryItem.new
     @activity = Activity.find(params[:id])
 
     render("activities/show.html.erb")
@@ -37,10 +23,7 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
 
     @activity.category_id = params[:category_id]
-    @activity.trip_id = params[:trip_id]
     @activity.name = params[:name]
-    @activity.location = params[:location]
-    @activity.user_id = params[:user_id]
 
     save_status = @activity.save
 
@@ -68,10 +51,7 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
 
     @activity.category_id = params[:category_id]
-    @activity.trip_id = params[:trip_id]
     @activity.name = params[:name]
-    @activity.location = params[:location]
-    @activity.user_id = params[:user_id]
 
     save_status = @activity.save
 
