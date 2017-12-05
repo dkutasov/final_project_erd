@@ -18,7 +18,16 @@
       <dd><%= @trip.ending_date %></dd>
 
       <dt>User</dt>
-      <dd><%= @trip.user_id %></dd>
+      <dd>
+        <% if @trip.user.present? %>
+          <a href="/users/<%= @trip.user_id %>">
+            <%= @trip.user.email %>
+          </a>
+        <% end %>
+      </dd>
+
+      <dt>Name</dt>
+      <dd><%= @trip.name %></dd>
 
     </dl>
 
@@ -26,38 +35,40 @@
       <a href="/trips" class="btn btn-primary">
         Back
       </a>
-      <a href="/trips/<%= @trip.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_trip/<%= @trip.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+      <% if current_user == @trip.user %>
+        <a href="/trips/<%= @trip.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_trip/<%= @trip.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
     </div>
   </div>
 </div>
 
-<!-- A Trip has many activities -->
+<!-- A Trip has many itinerary_items -->
 
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Activities
+        Itinerary Items
       </li>
 
-      <% @trip.activities.each do |activity| %>
+      <% @trip.itinerary_items.each do |itinerary_item| %>
         <li class="list-group-item">
-          <a href="/activities/<%= activity.id %>">
-            <%= activity.created_at %>
+          <a href="/itinerary_items/<%= itinerary_item.id %>">
+            <%= itinerary_item.name %>
           </a>
           <div class="btn-group btn-group-xs pull-right">
-            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
+            <a href="/itinerary_items/<%= itinerary_item.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
-            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
+            <a href="/itinerary_items/<%= itinerary_item.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
-            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
+            <a href="/delete_itinerary_item/<%= itinerary_item.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
           </div>
@@ -65,17 +76,17 @@
       <% end %>
 
       <li class="list-group-item">
-        <form action="/create_activity" method="post">
+        <form action="/create_itinerary_item" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for category_id -->
+      <!-- Label and input for activity_id -->
       <div class="form-group">
-        <label for="category_id" class="control-label">
-          Category
+        <label for="activity_id" class="control-label">
+          Activity
         </label>
 
-        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :user_id), :class => "form-control") %>
+        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :name), :class => "form-control") %>
       </div>
 
       <!-- Label and input for trip_id -->
@@ -99,11 +110,8 @@
         <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="">
       </div>
 
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
       <button class="btn btn-block btn-success">
-        Create Activity
+        Create Itinerary Item
       </button>
     </form>
       </li>
@@ -111,28 +119,28 @@
   </div>
 </div>
 
-<!-- A Trip has many users -->
+<!-- A Trip has many activities -->
 
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Users
+        Activities
       </li>
 
-      <% @trip.users.each do |user| %>
+      <% @trip.activities.each do |activity| %>
         <li class="list-group-item">
-          <a href="/users/<%= user.id %>">
-            <%= user.email %>
+          <a href="/activities/<%= activity.id %>">
+            <%= activity.name %>
           </a>
           <div class="btn-group btn-group-xs pull-right">
-            <a href="/users/<%= user.id %>" class="btn btn-primary">
+            <a href="/activities/<%= activity.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
-            <a href="/users/<%= user.id %>/edit" class="btn btn-warning">
+            <a href="/activities/<%= activity.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
-            <a href="/delete_user/<%= user.id %>" class="btn btn-danger" rel="nofollow">
+            <a href="/delete_activity/<%= activity.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
           </div>

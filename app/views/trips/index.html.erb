@@ -9,16 +9,9 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
-  <%= f.label :user_id, "User" %>
-  <div class="row">
-    <div class='col-md-6 mb-1'>
-      <%= f.text_field :user_id_gteq, :class => "form-control", :placeholder => "User greater than or equal to" %>
-    </div>
-    <div class='col-md-6'>
-      <%= f.text_field :user_id_lteq, :class => "form-control", :placeholder => "User less than or equal to" %>
-    </div>
+    <%= f.label :name_cont, "Name contains" %>
+    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
   </div>
-</div>
 
 <div class="form-group">
           <%= f.label :ending_date, "Ending date" %>
@@ -165,48 +158,13 @@
       </script>
 
         <div class="form-group">
-          <%= f.label :created_at, "Activity Created at" %>
-          <div class="row">
-            <div class='col-md-6 mb-1'>
-              <div class='input-group date' id='activitiesgteqcreated_atPicker'>
-                  <%= f.text_field :activities_created_at_gteq, :class => "form-control", :placeholder => "Activity Created at greater than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-
-            <div class='col-md-6'>
-              <div class='input-group date' id='activitieslteqcreated_atPicker'>
-                  <%= f.text_field :activities_created_at_lteq, :class => "form-control", :placeholder => "Activity Created at less than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-          </div>
-      </div>
-      <script type="text/javascript">
-          $(function () {
-              $('#activitiesgteqcreated_atPicker').datetimepicker({
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#activitieslteqcreated_atPicker').datetimepicker({
-                  useCurrent: false,
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#activitiesgteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#activitieslteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
-              });
-              $('#activitieslteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#activitiesgteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
-              });
-          });
-      </script>
+      <%= f.label :itinerary_items_name_cont, "ItineraryItem name contains" %>
+      <%= f.text_field :itinerary_items_name_cont, :class => "form-control", :placeholder => "ItineraryItem name contains" %>
+    </div>
 
 <div class="form-group">
-      <%= f.label :users_email_cont, "User email contains" %>
-      <%= f.text_field :users_email_cont, :class => "form-control", :placeholder => "User email contains" %>
+      <%= f.label :activities_name_cont, "Activity name contains" %>
+      <%= f.text_field :activities_name_cont, :class => "form-control", :placeholder => "Activity name contains" %>
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
@@ -228,6 +186,7 @@
         <th>Beginning date</th>
         <th>Ending date</th>
         <th>User</th>
+        <th>Name</th>
         <th>Actions</th>
       </tr>
 
@@ -237,11 +196,21 @@
         <td><%= trip.activity_id %></td>
         <td><%= trip.beginning_date %></td>
         <td><%= trip.ending_date %></td>
-        <td><%= trip.user_id %></td>
+        <td>
+          <% if trip.user.present? %>
+            <a href="/users/<%= trip.user.id %>">
+              <%= trip.user.email %>
+            </a>
+          <% end %>
+        </td>
+        <td><%= trip.name %></td>
         <td>
           <a href="/trips/<%= trip.id %>" class="btn btn-primary">Show</a>
-          <a href="/trips/<%= trip.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_trip/<%= trip.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          
+          <% if current_user == trip.user %>
+            <a href="/trips/<%= trip.id %>/edit" class="btn btn-warning">Edit</a>
+            <a href="/delete_trip/<%= trip.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% end %>
         </td>
       </tr>
       <% end %>

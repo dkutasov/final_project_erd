@@ -5,9 +5,6 @@
 <div class="row">
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
-      <dt>User</dt>
-      <dd><%= @category.user_id %></dd>
-
       <dt>Name</dt>
       <dd><%= @category.name %></dd>
 
@@ -39,7 +36,7 @@
       <% @category.activities.each do |activity| %>
         <li class="list-group-item">
           <a href="/activities/<%= activity.id %>">
-            <%= activity.created_at %>
+            <%= activity.name %>
           </a>
           <div class="btn-group btn-group-xs pull-right">
             <a href="/activities/<%= activity.id %>" class="btn btn-primary">
@@ -63,14 +60,62 @@
       <!-- Label and input for category_id -->
       <input type="hidden" name="category_id" value="<%= @category.id %>">
 
-      <!-- Label and input for trip_id -->
+      <!-- Label and input for name -->
       <div class="form-group">
-        <label for="trip_id" class="control-label">
-          Trip
+        <label for="name" class="control-label">
+          Name
         </label>
 
-        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :created_at), :class => "form-control") %>
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
       </div>
+
+      <button class="btn btn-block btn-success">
+        Create Activity
+      </button>
+    </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- A Category has many preferences -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Preferences
+      </li>
+
+      <% @category.preferences.each do |preference| %>
+        <li class="list-group-item">
+          <a href="/preferences/<%= preference.id %>">
+            <%= preference.name %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/preferences/<%= preference.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/preferences/<%= preference.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_preference/<%= preference.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_preference" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for category_id -->
+      <input type="hidden" name="category_id" value="<%= @category.id %>">
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <!-- Label and input for name -->
       <div class="form-group">
@@ -81,20 +126,8 @@
         <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
       </div>
 
-      <!-- Label and input for location -->
-      <div class="form-group">
-        <label for="location" class="control-label">
-          Location
-        </label>
-
-        <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="">
-      </div>
-
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
       <button class="btn btn-block btn-success">
-        Create Activity
+        Create Preference
       </button>
     </form>
       </li>

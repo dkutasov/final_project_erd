@@ -1,6 +1,6 @@
 <!-- Validation failure messages -->
-<% if @activity.errors.any? %>
-  <% @activity.errors.full_messages.each do |message| %>
+<% if @preference.errors.any? %>
+  <% @preference.errors.full_messages.each do |message| %>
     <div class="alert alert-dismissable alert-danger">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <%= message %>
@@ -9,12 +9,12 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Edit Activity #<%= @activity.id %></h3>
+  <h3>Add Preference</h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <form action="/update_activity/<%= @activity.id %>" method="post">
+    <form action="/create_preference" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
@@ -24,8 +24,11 @@
           Category
         </label>
 
-        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name, @activity.category_id), :class => "form-control") %>
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name, @preference.category_id), :class => "form-control") %>
       </div>
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <!-- Label and input for name -->
       <div class="form-group">
@@ -33,14 +36,14 @@
           Name
         </label>
 
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @activity.name %>">
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @preference.name %>">
       </div>
 
-      <button class="btn btn-warning">
-        Update Activity
+      <button class="btn btn-success">
+        Create Preference
       </button>
       or
-      <a href="/activities/<%= @activity.id %>">Cancel</a>
+      <a href="/preferences">Cancel</a>
     </form>
   </div>
 </div>

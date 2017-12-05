@@ -1,6 +1,6 @@
-ActiveAdmin.register Activity do
+ActiveAdmin.register ItineraryItem do
 
- permit_params :category_id, :name
+ permit_params :activity_id, :trip_id, :name, :location
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

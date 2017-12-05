@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @itinerary_item.errors.any? %>
+  <% @itinerary_item.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Itinerary Item #<%= @itinerary_item.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_itinerary_item/<%= @itinerary_item.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for activity_id -->
+      <div class="form-group">
+        <label for="activity_id" class="control-label">
+          Activity
+        </label>
+
+        <%= select_tag(:activity_id, options_from_collection_for_select(Activity.all, :id, :name, @itinerary_item.activity_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for trip_id -->
+      <div class="form-group">
+        <label for="trip_id" class="control-label">
+          Trip
+        </label>
+
+        <%= select_tag(:trip_id, options_from_collection_for_select(Trip.all, :id, :name, @itinerary_item.trip_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @itinerary_item.name %>">
+      </div>
+
+      <!-- Label and input for location -->
+      <div class="form-group">
+        <label for="location" class="control-label">
+          Location
+        </label>
+
+        <input type="text" id="location" name="location" placeholder="Location" class="form-control" value="<%= @itinerary_item.location %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Itinerary Item
+      </button>
+      or
+      <a href="/itinerary_items/<%= @itinerary_item.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

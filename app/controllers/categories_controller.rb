@@ -1,12 +1,13 @@
 class CategoriesController < ApplicationController
   def index
     @q = Category.ransack(params[:q])
-    @categories = @q.result(:distinct => true).includes(:activities, :users).page(params[:page]).per(10)
+    @categories = @q.result(:distinct => true).includes(:activities, :preferences, :users).page(params[:page]).per(10)
 
     render("categories/index.html.erb")
   end
 
   def show
+    @preference = Preference.new
     @activity = Activity.new
     @category = Category.find(params[:id])
 
@@ -22,7 +23,6 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new
 
-    @category.user_id = params[:user_id]
     @category.name = params[:name]
 
     save_status = @category.save
@@ -50,7 +50,6 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])
 
-    @category.user_id = params[:user_id]
     @category.name = params[:name]
 
     save_status = @category.save
